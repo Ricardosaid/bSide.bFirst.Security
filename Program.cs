@@ -1,4 +1,5 @@
 ﻿using System;
+using bSide;
 
 namespace bSide.bFirst.Security
 {
@@ -6,7 +7,7 @@ namespace bSide.bFirst.Security
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
         }
     }
 }

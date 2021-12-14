@@ -6,10 +6,17 @@ using System.Threading.Tasks;
 
 namespace bSide.bFirst.Security.Models
 {
+
     public class HistoricAccess
     {
-        public int CardNumber { get; set; }
-        public DateTime DateAccess { get; set; }
-        public Guid IdIoTDevice { get; set; }
+        //Valores que voy a obtener del historico de acceso
+        public int cardNumber { get; set; }
+        public DateTime dateAccess { get; set; }
+        public string idIoTDevice { get; set; }
+        public string id { get; set; }
+        public string partitionKey { get; set; }
+        public string eTag { get; set; }
+        public DateTime timestamps { get; set; }
     }
+
 }
