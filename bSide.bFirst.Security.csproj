@@ -5,4 +5,10 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="bSide.bFirst.query">
+      <HintPath>..\cards\bside.bfirst.cards\bside.bFirst.cards\bSide.bFirst.query\obj\Debug\net5.0\bSide.bFirst.query.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
