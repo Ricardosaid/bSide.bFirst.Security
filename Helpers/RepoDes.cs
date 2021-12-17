@@ -15,6 +15,6 @@ namespace bSide.bFirst.Security.Helpers
     public class RepoDes
     {
         public int cardNumber { get; set; } //La convención es que sea mayuscula la primera letra, pero en el JSOn la tenemos así
-        
+        public string idIoTDevice { get; set; } // Agregamos un nuevo atributo
     }
 }

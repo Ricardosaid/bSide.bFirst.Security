@@ -78,7 +78,7 @@ namespace prueba
             var repositories = await JsonSerializer.DeserializeAsync<List<RepoDes>>(await streamTask); //omitimos los parametros JsonSerializerOptions & cancellationToken (poner cursos en el método)
 
             foreach (var repo in repositories)
-                Console.WriteLine(repo.cardNumber);
+                Console.WriteLine($"**La persona con el numero de tarjeta {repo.cardNumber} tiene el siguiente ID {repo.idIoTDevice}** \n");
 
         }
     }
