@@ -1,6 +1,9 @@
-﻿using System;
+﻿using bSide.bFirst.Security.Helpers;
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace prueba
@@ -59,10 +62,23 @@ namespace prueba
                 new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Add("User-Agent", "Query Historic Repository");
 
-            var stringTask = client.GetStringAsync("https://localhost:5001/api/HistoricAccess");
+            /*Reemplazamos la llamada al metodo GetStringAsync*/
 
-            var msg = await stringTask;
-            Console.WriteLine(msg);
+            var streamTask = client.GetStreamAsync("https://localhost:5001/api/HistoricAccess"); // Usa como orgigen una secuenciaen lugar de una cadena
+            /* Las expresiones await pueden aparecer prácticamente en cualquier
+             * parte del código, aunque hasta ahora solo se han visto como parte
+             * de una instrucción de asignación. 
+             * 
+             * DeserealizeAsync es genérico. Se va a deserializar en List<RepoDes> que es un objeto generico.
+             * 
+             * List<T> es una clase que administra ua colección de objetos.*** EL ARGUMENTO DE TIPO DE OBJETOS
+             * ALAMCENADOS EN List<T>. EL ARGUMENTO DE TIPO ES LA CLASE RepoDes, PORQUE EL TEXTO JSON
+             * REPRESENTA UNA COLECCIÓN DE OBKETOS DE REPOSITORIO.****
+             */
+            var repositories = await JsonSerializer.DeserializeAsync<List<RepoDes>>(await streamTask); //omitimos los parametros JsonSerializerOptions & cancellationToken (poner cursos en el método)
+
+            foreach (var repo in repositories)
+                Console.WriteLine(repo.cardNumber);
 
         }
     }
