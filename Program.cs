@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace prueba
 {
@@ -31,7 +32,8 @@ namespace prueba
          */
         static async Task Main(string[] args)
         {
-            await ProcessRepositories();
+            await ProcessXML();
+            // await ProcessRepositories();
         }
 
         /*
@@ -64,7 +66,7 @@ namespace prueba
 
             /*Reemplazamos la llamada al metodo GetStringAsync*/
 
-            var streamTask = client.GetStreamAsync("https://localhost:5001/api/HistoricAccess"); // Usa como orgigen una secuenciaen lugar de una cadena
+            var streamTask = client.GetStreamAsync("http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd"); // Usa como orgigen una secuenciaen lugar de una cadena
             /* Las expresiones await pueden aparecer prácticamente en cualquier
              * parte del código, aunque hasta ahora solo se han visto como parte
              * de una instrucción de asignación. 
@@ -79,6 +81,54 @@ namespace prueba
 
             foreach (var repo in repositories)
                 Console.WriteLine($"**La persona con el numero de tarjeta {repo.cardNumber} tiene el siguiente ID {repo.idIoTDevice}** \n");
+
+        }
+
+        // Metodo para obtener valores de los nodos xml
+        private static async Task ProcessXML()
+        {
+            string URLstring = "http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd";
+            XmlTextReader reader = new XmlTextReader(URLstring);
+
+            while (reader.Read())
+            {
+                var campo = reader.Name;
+                if(campo == "xs:attribute")
+                {
+                    switch (reader.NodeType)
+                    {
+                    case XmlNodeType.Element:
+                        // Console.Write("<" + reader.Name);
+
+                        while(reader.MoveToNextAttribute())
+                            if(reader.Name == "name")
+                                Console.Write(" " + reader.Name + "='" + reader.Value + "'");
+                        Console.Write(">");
+                        Console.WriteLine(">");
+                        break;
+
+                    }
+
+                }
+                
+                
+
+                    /*Aqui leemos los nodos con su respectivo cierre así como su descripción*/
+                    // case XmlNodeType.Element:
+                    //     Console.Write("<" + reader.Name);
+                    //     Console.WriteLine(">");
+                    //     break;
+                    // case XmlNodeType.Text:
+                    //     Console.WriteLine(reader.Value);
+                    //     break;
+                    // case XmlNodeType.EndElement:
+                    //     Console.Write("</" + reader.Name);
+                    //     Console.WriteLine(">");
+                    //     break;
+
+            
+
+            }
 
         }
     }
